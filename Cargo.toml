@@ -1,0 +1,33 @@
+[workspace]
+members = ["cli"]
+
+[workspace.dependencies]
+advent = { git = "https://github.com/rossmacarthur/advent" }
+anyhow = "1.0.75"
+argh = "0.1.12"
+curl = "0.4.44"
+itertools = "0.13.0"
+open = "5.0.1"
+petgraph = "0.6.5"
+rand = "0.8.5"
+regex-macro = "0.2.0"
+serde = { version = "1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
+thiserror = "2.0.3"
+time = "0.3.30"
+toml = "0.8.8"
+vectrix = "0.3.0"
+yansi = "1.0.1"
+
+[package]
+name = "advent-bins"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+advent = { workspace = true, features = ["prelude"] }
+
+[[bin]]
+name = "202401"
+path = "2024/01.rs"
