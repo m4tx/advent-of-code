@@ -11,5 +11,5 @@ cargo advent -y 2024 -d 1 run
 
 ## Attribution
 
-This uses the great AoC runner and CLI [rossmacarthur/advent](https://github.com/rossmacarthur/advent). The code in
+This uses a great AoC runner and CLI [rossmacarthur/advent](https://github.com/rossmacarthur/advent). The code in
 `cli` directory is a modification of this code, licensed under MIT/Apache-2.0.

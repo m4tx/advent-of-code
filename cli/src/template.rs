@@ -29,3 +29,10 @@ fn default() {
     assert_eq!(part1(input.clone()), 1);
     assert_eq!(part2(input), 2);
 }
+
+#[test]
+fn examples() {
+    let input = parse_input("");
+    assert_eq!(part1(input.clone()), 1);
+    assert_eq!(part2(input), 2);
+}
