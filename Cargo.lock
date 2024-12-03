@@ -17,6 +17,7 @@ name = "advent-bins"
 version = "0.0.0"
 dependencies = [
  "advent",
+ "regex",
 ]
 
 [[package]]
