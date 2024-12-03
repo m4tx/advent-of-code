@@ -54,12 +54,14 @@ fn default() {
 
 #[test]
 fn examples() {
-    let input = parse_input("3   4
+    let input = parse_input(
+        "3   4
 4   3
 2   5
 1   3
 3   9
-3   3");
+3   3",
+    );
     assert_eq!(part1(input.clone()), 11);
     assert_eq!(part2(input.clone()), 31);
 }

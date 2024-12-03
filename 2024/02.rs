@@ -5,7 +5,11 @@ type Input = Vec<Vec<i64>>;
 fn parse_input(input: &str) -> Input {
     input
         .lines()
-        .map(|line| line.split_whitespace().map(|x| x.parse().unwrap()).collect())
+        .map(|line| {
+            line.split_whitespace()
+                .map(|x| x.parse().unwrap())
+                .collect()
+        })
         .collect()
 }
 
@@ -27,7 +31,10 @@ fn part1(input: Input) -> i64 {
 fn is_safe(line: &Vec<i64>) -> bool {
     let increasing = line[1] > line[0];
     for i in 1..line.len() {
-        if (increasing && line[i - 1] > line[i]) || (!increasing && line[i - 1] < line[i]) || !(1i64..=3i64).contains(&(line[i - 1] - line[i]).abs()) {
+        if (increasing && line[i - 1] > line[i])
+            || (!increasing && line[i - 1] < line[i])
+            || !(1i64..=3i64).contains(&(line[i - 1] - line[i]).abs())
+        {
             return false;
         }
     }
@@ -70,12 +77,14 @@ fn default() {
 
 #[test]
 fn examples() {
-    let input = parse_input("7 6 4 2 1
+    let input = parse_input(
+        "7 6 4 2 1
 1 2 7 8 9
 9 7 6 2 1
 1 3 2 4 5
 8 6 4 4 1
-1 3 6 7 9");
+1 3 6 7 9",
+    );
     assert_eq!(part1(input.clone()), 2);
     assert_eq!(part2(input), 4);
 }

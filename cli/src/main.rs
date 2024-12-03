@@ -171,7 +171,7 @@ fn check_input(year: u32, day: u32) -> Result<()> {
         time::Date::from_calendar_date(year as i32, time::Month::December, day as u8)?,
         time::Time::from_hms(5, 0, 0)?,
     )
-        .assume_utc();
+    .assume_utc();
     if now < puzzle {
         warning(
             "Unavailable",
