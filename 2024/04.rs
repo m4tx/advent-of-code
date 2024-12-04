@@ -62,30 +62,8 @@ fn part1(input: Input) -> i64 {
                 String::new()
             };
 
-            if horizontal == "XMAS" {
-                count += 1;
-            }
-            if vertical == "XMAS" {
-                count += 1;
-            }
-            if diagonal == "XMAS" {
-                count += 1;
-            }
-            if diagonal_2 == "XMAS" {
-                count += 1;
-            }
-            if horizontal == "SAMX" {
-                count += 1;
-            }
-            if vertical == "SAMX" {
-                count += 1;
-            }
-            if diagonal == "SAMX" {
-                count += 1;
-            }
-            if diagonal_2 == "SAMX" {
-                count += 1;
-            }
+            let v = vec![horizontal, vertical, diagonal, diagonal_2];
+            count += v.into_iter().filter(|s| s == "XMAS" || s == "SAMX").count() as i64;
         }
     }
 
