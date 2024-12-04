@@ -75,28 +75,20 @@ fn part2(input: Input) -> i64 {
 
     let x_len = input[0].len();
     let y_len = input.len();
-    for x in 0..x_len {
-        for y in 0..y_len {
-            let diagonal = if x + 2 < x_len && y + 2 < y_len {
-                format!(
-                    "{}{}{}",
-                    input[y][x],
-                    input[y + 1][x + 1],
-                    input[y + 2][x + 2]
-                )
-            } else {
-                String::new()
-            };
-            let diagonal_2 = if x + 2 < x_len && y + 2 < y_len {
-                format!(
-                    "{}{}{}",
-                    input[y][x + 2],
-                    input[y + 1][x + 1],
-                    input[y + 2][x]
-                )
-            } else {
-                String::new()
-            };
+    for x in 0..x_len - 2 {
+        for y in 0..y_len - 2 {
+            let diagonal = format!(
+                "{}{}{}",
+                input[y][x],
+                input[y + 1][x + 1],
+                input[y + 2][x + 2]
+            );
+            let diagonal_2 = format!(
+                "{}{}{}",
+                input[y][x + 2],
+                input[y + 1][x + 1],
+                input[y + 2][x]
+            );
 
             if (diagonal == "MAS" || diagonal == "SAM")
                 && (diagonal_2 == "MAS" || diagonal_2 == "SAM")
@@ -117,8 +109,8 @@ fn main() {
 #[test]
 fn default() {
     let input = default_input();
-    assert_eq!(part1(input.clone()), 1);
-    assert_eq!(part2(input), 2);
+    assert_eq!(part1(input.clone()), 2569);
+    assert_eq!(part2(input), 1998);
 }
 
 #[test]
