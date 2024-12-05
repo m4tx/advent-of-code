@@ -111,8 +111,8 @@ fn main() {
 #[test]
 fn default() {
     let input = default_input();
-    assert_eq!(part1(input.clone()), 1);
-    assert_eq!(part2(input), 2);
+    assert_eq!(part1(input.clone()), 4905);
+    assert_eq!(part2(input), 6204);
 }
 
 #[test]
