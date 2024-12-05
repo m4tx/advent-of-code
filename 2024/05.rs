@@ -3,7 +3,7 @@ use std::str::FromStr;
 
 #[derive(Debug, Clone)]
 struct Input {
-    rules: Vec<(i64, i64)>,
+    rules: HashSet<(i64, i64)>,
     updates: Vec<Vec<i64>>,
 }
 
@@ -14,7 +14,7 @@ fn parse_input(input: &str) -> Input {
     }
     let mut mode = Mode::Rules;
     let mut data = Input {
-        rules: Vec::new(),
+        rules: HashSet::new(),
         updates: Vec::new(),
     };
     for line in input.lines() {
@@ -24,7 +24,7 @@ fn parse_input(input: &str) -> Input {
                     mode = Mode::Updates;
                 } else {
                     let rule: Vec<_> = line.split("|").map(|x| i64::from_str(x).unwrap()).collect();
-                    data.rules.push((rule[0], rule[1]));
+                    data.rules.insert((rule[1], rule[0]));
                 }
             }
             Mode::Updates => {
@@ -51,15 +51,10 @@ fn part1(input: Input) -> i64 {
         .sum()
 }
 
-fn update_valid(update: &Vec<i64>, rules: &Vec<(i64, i64)>) -> bool {
+fn update_valid(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> bool {
     for next in 1..update.len() {
         for prev in 0..next {
-            if rules
-                .iter()
-                .filter(|(dep, num)| (*dep, *num) == (update[next], update[prev]))
-                .next()
-                .is_some()
-            {
+            if rules.contains(&(update[prev], update[next])) {
                 return false;
             }
         }
@@ -68,7 +63,7 @@ fn update_valid(update: &Vec<i64>, rules: &Vec<(i64, i64)>) -> bool {
     true
 }
 
-fn fix_invalid_update(update: &Vec<i64>, rules: &Vec<(i64, i64)>) -> Vec<i64> {
+fn fix_invalid_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
     let mut update = update.clone();
 
     let mut updated = true;
@@ -77,12 +72,7 @@ fn fix_invalid_update(update: &Vec<i64>, rules: &Vec<(i64, i64)>) -> Vec<i64> {
 
         for next in 1..update.len() {
             for prev in 0..next {
-                if rules
-                    .iter()
-                    .filter(|(dep, num)| (*dep, *num) == (update[next], update[prev]))
-                    .next()
-                    .is_some()
-                {
+                if rules.contains(&(update[prev], update[next])) {
                     update.swap(next, prev);
                     updated = true;
                 }
