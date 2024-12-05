@@ -5,7 +5,7 @@ version = 4
 [[package]]
 name = "advent"
 version = "0.1.0"
-source = "git+https://github.com/rossmacarthur/advent#33602ef987536049b79569d799603e0122fb4e0a"
+source = "git+https://github.com/rossmacarthur/advent?rev=33602ef987536049b79569d799603e0122fb4e0a#33602ef987536049b79569d799603e0122fb4e0a"
 dependencies = [
  "argh",
  "prelude",
@@ -232,7 +232,7 @@ dependencies = [
 [[package]]
 name = "itertools-shim"
 version = "0.0.0"
-source = "git+https://github.com/rossmacarthur/advent#33602ef987536049b79569d799603e0122fb4e0a"
+source = "git+https://github.com/rossmacarthur/advent?rev=33602ef987536049b79569d799603e0122fb4e0a#33602ef987536049b79569d799603e0122fb4e0a"
 dependencies = [
  "itertools",
 ]
@@ -323,7 +323,7 @@ checksum = "439ee305def115ba05938db6eb1644ff94165c5ab5e9420d1c1bcedbba909391"
 [[package]]
 name = "prelude"
 version = "0.0.0"
-source = "git+https://github.com/rossmacarthur/advent#33602ef987536049b79569d799603e0122fb4e0a"
+source = "git+https://github.com/rossmacarthur/advent?rev=33602ef987536049b79569d799603e0122fb4e0a#33602ef987536049b79569d799603e0122fb4e0a"
 dependencies = [
  "ahash",
  "either",
@@ -477,7 +477,7 @@ dependencies = [
 [[package]]
 name = "then"
 version = "0.1.0"
-source = "git+https://github.com/rossmacarthur/advent#33602ef987536049b79569d799603e0122fb4e0a"
+source = "git+https://github.com/rossmacarthur/advent?rev=33602ef987536049b79569d799603e0122fb4e0a#33602ef987536049b79569d799603e0122fb4e0a"
 
 [[package]]
 name = "time"
