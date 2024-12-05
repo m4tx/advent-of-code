@@ -3,33 +3,34 @@ use std::str::FromStr;
 
 #[derive(Debug, Clone)]
 struct Input {
-    rules: HashSet<(i64, i64)>,
-    updates: Vec<Vec<i64>>,
+    rules: [bool; 128 * 128],
+    updates: Vec<Vec<i32>>,
 }
 
 fn parse_input(input: &str) -> Input {
+    #[derive(Debug, Copy, Clone)]
     enum Mode {
         Rules,
         Updates,
     }
     let mut mode = Mode::Rules;
     let mut data = Input {
-        rules: HashSet::new(),
+        rules: [false; 128 * 128],
         updates: Vec::new(),
     };
     for line in input.lines() {
         match mode {
             Mode::Rules => {
-                if line == "" {
+                if line.is_empty() {
                     mode = Mode::Updates;
                 } else {
-                    let rule: Vec<_> = line.split("|").map(|x| i64::from_str(x).unwrap()).collect();
-                    data.rules.insert((rule[1], rule[0]));
+                    let rule: Vec<_> = line.split("|").map(|x| i32::from_str(x).unwrap()).collect();
+                    data.rules[(rule[1] * 128 + rule[0]) as usize] = true;
                 }
             }
             Mode::Updates => {
                 let page_nums: Vec<_> =
-                    line.split(",").map(|x| i64::from_str(x).unwrap()).collect();
+                    line.split(",").map(|x| i32::from_str(x).unwrap()).collect();
                 data.updates.push(page_nums);
             }
         }
@@ -42,7 +43,7 @@ fn default_input() -> Input {
     parse_input(include_input!(2024 / 05))
 }
 
-fn part1(input: Input) -> i64 {
+fn part1(input: Input) -> i32 {
     input
         .updates
         .into_iter()
@@ -51,44 +52,28 @@ fn part1(input: Input) -> i64 {
         .sum()
 }
 
-fn update_valid(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> bool {
-    for next in 1..update.len() {
-        for prev in 0..next {
-            if rules.contains(&(update[prev], update[next])) {
-                return false;
-            }
-        }
-    }
-
-    true
+fn update_valid(update: &Vec<i32>, rules: &[bool]) -> bool {
+    update.is_sorted_by(|a, b| !rules[(a * 128 + b) as usize])
 }
 
-fn fix_invalid_update(update: &Vec<i64>, rules: &HashSet<(i64, i64)>) -> Vec<i64> {
-    let mut update = update.clone();
-
-    let mut updated = true;
-    while updated {
-        updated = false;
-
-        for next in 1..update.len() {
-            for prev in 0..next {
-                if rules.contains(&(update[prev], update[next])) {
-                    update.swap(next, prev);
-                    updated = true;
-                }
-            }
+fn fix_invalid_update(mut update: Vec<i32>, rules: &[bool]) -> Vec<i32> {
+    update.sort_by(|a, b| {
+        if rules[(a * 128 + b) as usize] {
+            Ordering::Greater
+        } else {
+            Ordering::Less
         }
-    }
+    });
 
     update
 }
 
-fn part2(input: Input) -> i64 {
+fn part2(input: Input) -> i32 {
     input
         .updates
         .into_iter()
         .filter(|update| !update_valid(update, &input.rules))
-        .map(|update| fix_invalid_update(&update, &input.rules))
+        .map(|update| fix_invalid_update(update, &input.rules))
         .map(|update| update[update.len() / 2])
         .sum()
 }
