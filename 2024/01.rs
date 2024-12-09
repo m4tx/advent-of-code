@@ -45,11 +45,12 @@ fn main() {
     solution.cli()
 }
 
+#[ignore]
 #[test]
 fn default() {
     let input = default_input();
-    assert_eq!(part1(input.clone()), 1);
-    assert_eq!(part2(input), 2);
+    assert_eq!(part1(input.clone()), 3246517);
+    assert_eq!(part2(input), 29379307);
 }
 
 #[test]
