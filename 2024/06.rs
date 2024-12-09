@@ -18,6 +18,7 @@ fn part1(input: Input) -> i64 {
     calc(input).unwrap()
 }
 
+#[allow(clippy::needless_range_loop)]
 fn calc(mut input: Input) -> Option<i64> {
     let mut x: i64 = 0;
     let mut y: i64 = 0;

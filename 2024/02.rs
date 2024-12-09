@@ -28,7 +28,7 @@ fn part1(input: Input) -> i64 {
     count
 }
 
-fn is_safe(line: &Vec<i64>) -> bool {
+fn is_safe(line: &[i64]) -> bool {
     let increasing = line[1] > line[0];
     for i in 1..line.len() {
         if (increasing && line[i - 1] > line[i])

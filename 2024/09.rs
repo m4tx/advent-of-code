@@ -97,10 +97,9 @@ fn part2(mut disk: Input) -> i64 {
         let first_suitable_free = disk[0..file_index]
             .iter()
             .enumerate()
-            .filter(|(index, node)| {
+            .find(|(_index, node)| {
                 node.block == DiskBlock::Free && node.size >= disk[file_index].size
-            })
-            .next();
+            });
 
         if let Some((free_index, free_node)) = first_suitable_free {
             let free = free_node.size - disk[file_index].size;
@@ -116,7 +115,7 @@ fn part2(mut disk: Input) -> i64 {
     checksum(&disk.to_raw())
 }
 
-fn checksum(disk: &Vec<DiskBlock>) -> i64 {
+fn checksum(disk: &[DiskBlock]) -> i64 {
     disk.iter()
         .enumerate()
         .map(|(index, val)| match *val {

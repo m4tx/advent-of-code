@@ -52,7 +52,7 @@ fn part1(input: Input) -> i32 {
         .sum()
 }
 
-fn update_valid(update: &Vec<i32>, rules: &[bool]) -> bool {
+fn update_valid(update: &[i32], rules: &[bool]) -> bool {
     update.is_sorted_by(|a, b| !rules[(a * 128 + b) as usize])
 }
 

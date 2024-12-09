@@ -33,8 +33,8 @@ fn part1((mut l, mut r): Input) -> i32 {
 
 fn part2((l, r): Input) -> i32 {
     let mut similarity = 0;
-    for i in 0..l.len() {
-        similarity += l[i] as usize * r.iter().filter(|&&x| x == l[i]).count();
+    for val in l {
+        similarity += val as usize * r.iter().filter(|&&x| x == val).count();
     }
 
     similarity as i32

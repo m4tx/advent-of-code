@@ -15,11 +15,7 @@ fn parse_input(input: &str) -> Input {
         } else if input[i..].starts_with("mul(") {
             if let Some(captures) = re.captures(&input[i..]) {
                 let (_, [a, b]) = captures.extract();
-                results.push((
-                    enabled,
-                    i64::from_str_radix(a, 10).unwrap(),
-                    i64::from_str_radix(b, 10).unwrap(),
-                ));
+                results.push((enabled, a.parse().unwrap(), b.parse().unwrap()));
             }
         }
     }
