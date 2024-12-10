@@ -51,7 +51,13 @@ enum MathOp {
     Concat,
 }
 
-fn can_solve_impl(operation: &Operation, index: usize, op: MathOp, acc: i64, with_concat: bool) -> bool {
+fn can_solve_impl(
+    operation: &Operation,
+    index: usize,
+    op: MathOp,
+    acc: i64,
+    with_concat: bool,
+) -> bool {
     let val = match op {
         MathOp::Add => acc + operation.values[index],
         MathOp::Mul => acc * operation.values[index],
@@ -71,7 +77,8 @@ fn can_solve_impl(operation: &Operation, index: usize, op: MathOp, acc: i64, wit
     } else {
         can_solve_impl(operation, index + 1, MathOp::Add, val, with_concat)
             || can_solve_impl(operation, index + 1, MathOp::Mul, val, with_concat)
-            || (with_concat && can_solve_impl(operation, index + 1, MathOp::Concat, val, with_concat))
+            || (with_concat
+                && can_solve_impl(operation, index + 1, MathOp::Concat, val, with_concat))
     }
 }
 

@@ -22,7 +22,7 @@ yansi = "1.0.1"
 [package]
 name = "advent-bins"
 version = "0.0.0"
-edition = "2021"
+edition = "2024"
 publish = false
 
 [dependencies]
@@ -64,3 +64,7 @@ path = "2024/08.rs"
 [[bin]]
 name = "202409"
 path = "2024/09.rs"
+
+[[bin]]
+name = "202410"
+path = "2024/10.rs"
