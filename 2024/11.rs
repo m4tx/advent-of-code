@@ -37,11 +37,13 @@ fn num_after(num: i64, steps: i64, map: &mut HashMap<(i64, i64), i64>) -> i64 {
     let result = if num == 0 {
         num_after(1, steps - 1, map)
     } else {
-        let x_str = num.to_string();
-        if x_str.len() % 2 == 0 {
-            let x_1 = x_str[..x_str.len() / 2].parse().unwrap();
-            let x_2 = x_str[x_str.len() / 2..].parse().unwrap();
-            num_after(x_1, steps - 1, map) + num_after(x_2, steps - 1, map)
+        let len = num.ilog10() + 1;
+        if len % 2 == 0 {
+            let mult = 10i64.pow(len / 2);
+
+            let left = num / mult;
+            let right = num % mult;
+            num_after(left, steps - 1, map) + num_after(right, steps - 1, map)
         } else {
             num_after(num * 2024, steps - 1, map)
         }
