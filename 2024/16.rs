@@ -3,16 +3,6 @@ use std::ops::Add;
 
 type Input = Vec<Vec<Item>>;
 
-trait GridExt {
-    fn size(&self) -> (usize, usize);
-}
-
-impl<T> GridExt for Vec<Vec<T>> {
-    fn size(&self) -> (usize, usize) {
-        (self[0].len(), self.len())
-    }
-}
-
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 enum Item {
     Start,
@@ -63,12 +53,10 @@ impl Add<Self> for Point2D {
     }
 }
 
-fn find_start(grid: &Vec<Vec<Item>>) -> Point2D {
-    let (size_x, size_y) = grid.size();
-
-    for x in 0..size_x {
-        for y in 0..size_y {
-            if grid[y][x] == Item::Start {
+fn find_start(grid: &[Vec<Item>]) -> Point2D {
+    for (y, row) in grid.iter().enumerate() {
+        for (x, &item) in row.iter().enumerate() {
+            if item == Item::Start {
                 return Point2D::new(x as i64, y as i64);
             }
         }

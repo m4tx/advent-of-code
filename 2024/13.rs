@@ -88,7 +88,7 @@ fn part1(input: Input) -> i64 {
     input.into_iter().map(get_price).sum()
 }
 
-fn part2(mut input: Input) -> i64 {
+fn part2(input: Input) -> i64 {
     input
         .into_iter()
         .map(|machine| Machine {

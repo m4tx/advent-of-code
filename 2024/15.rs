@@ -171,14 +171,12 @@ fn calculate_score(grid: &Vec<Vec<Item>>) -> i64 {
         .sum()
 }
 
-fn find_player(grid: &mut Vec<Vec<Item>>) -> Point2D {
-    let (size_x, size_y) = grid.size();
-
-    for x in 0..size_x {
-        for y in 0..size_y {
-            if grid[y][x] == Item::Player {
-                grid[y][x] = Item::Empty;
-                return Point2D::new(x as i64, y as i64);
+fn find_player(grid: &mut [Vec<Item>]) -> Point2D {
+    for y in grid.iter_mut().enumerate() {
+        for x in y.1.iter_mut().enumerate() {
+            if *x.1 == Item::Player {
+                *x.1 = Item::Empty;
+                return Point2D::new(x.0 as i64, y.0 as i64);
             }
         }
     }
@@ -259,7 +257,7 @@ fn handle_move(player_move: Move, grid: &mut Vec<Vec<Item>>, position: Point2D) 
     }
 }
 
-fn move_item(grid: &mut Vec<Vec<Item>>, curr: Point2D, next: Point2D, current_item: Item) {
+fn move_item(grid: &mut [Vec<Item>], curr: Point2D, next: Point2D, current_item: Item) {
     grid[next.y as usize][next.x as usize] = current_item;
     grid[curr.y as usize][curr.x as usize] = Item::Empty;
 }

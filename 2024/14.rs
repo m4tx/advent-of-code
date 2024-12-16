@@ -1,5 +1,5 @@
 use advent::prelude::*;
-use std::ops::{Add, AddAssign, Mul};
+use std::ops::{Add, AddAssign};
 
 type Input = Vec<Robot>;
 
@@ -45,8 +45,8 @@ fn parse_input(input: &str) -> Input {
 
     let mut robots = Input::new();
 
-    let mut lines = input.lines();
-    while let Some(line) = lines.next() {
+    let lines = input.lines();
+    for line in lines {
         let captures = button_a_re.captures(line).unwrap();
         let a_x: i64 = captures.get(1).unwrap().as_str().parse().unwrap();
         let a_y: i64 = captures.get(2).unwrap().as_str().parse().unwrap();
