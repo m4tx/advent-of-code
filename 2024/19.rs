@@ -31,7 +31,7 @@ fn part1(input: Input) -> usize {
     input
         .requests
         .into_iter()
-        .filter(|request| count_combinations(&input.towels, &request) > 0)
+        .filter(|request| count_combinations(&input.towels, request) > 0)
         .count()
 }
 
