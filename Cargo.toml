@@ -28,6 +28,8 @@ publish = false
 [dependencies]
 advent = { workspace = true, features = ["prelude"] }
 regex = { workspace = true }
+rayon = "1.10.0"
+itertools = {workspace = true}
 
 [[bin]]
 name = "202401"
@@ -112,3 +114,7 @@ path = "2024/20.rs"
 [[bin]]
 name = "202421"
 path = "2024/21.rs"
+
+[[bin]]
+name = "202422"
+path = "2024/22.rs"
