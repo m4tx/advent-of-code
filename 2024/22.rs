@@ -84,8 +84,8 @@ fn get_bananas(mut num: i64) -> History {
 fn calc(num: i64) -> i64 {
     let num = (num ^ (num * 64)) % 16777216;
     let num = (num ^ (num / 32)) % 16777216;
-    let num = (num ^ (num * 2048)) % 16777216;
-    num
+
+    (num ^ (num * 2048)) % 16777216
 }
 
 fn main() {
