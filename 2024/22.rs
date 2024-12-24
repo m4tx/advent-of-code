@@ -54,7 +54,7 @@ struct History {
 impl History {
     fn get_price_for(&self, expected_changes: [i64; 4]) -> i64 {
         for i in 0..self.changes.len() - 3 {
-            if &self.changes[i..i + 4] == expected_changes {
+            if self.changes[i..i + 4] == expected_changes {
                 return self.prices[i + 3];
             }
         }
