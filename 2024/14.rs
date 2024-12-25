@@ -63,7 +63,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 14))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 14));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(mut input: Input) -> usize {
@@ -160,18 +163,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 221616000);
-    assert_eq!(part2(input), 7572);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "p=0,4 v=3,-3
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 221616000);
+        assert_eq!(part2(input), 7572);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "p=0,4 v=3,-3
 p=6,3 v=-1,-3
 p=10,3 v=-1,2
 p=2,0 v=2,-1
@@ -183,6 +190,7 @@ p=9,3 v=2,3
 p=7,3 v=-1,2
 p=2,4 v=2,-3
 p=9,5 v=-3,-3",
-    );
-    assert_eq!(part1(input), 21);
+        );
+        assert_eq!(part1(input), 21);
+    }
 }

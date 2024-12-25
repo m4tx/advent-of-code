@@ -62,7 +62,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 17))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 17));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> String {
@@ -204,22 +207,27 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), "7,5,4,3,4,5,3,4,6");
-    assert_eq!(part2(input), 164278899142333);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "Register A: 729
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), "7,5,4,3,4,5,3,4,6");
+        assert_eq!(part2(input), 164278899142333);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "Register A: 729
 Register B: 0
 Register C: 0
 
 Program: 0,1,5,4,3,0",
-    );
-    assert_eq!(part1(input.clone()), "4,6,3,5,6,3,5,2,1,0");
+        );
+        assert_eq!(part1(input.clone()), "4,6,3,5,6,3,5,2,1,0");
+    }
 }

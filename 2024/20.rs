@@ -81,7 +81,10 @@ fn find_start(grid: &[Vec<Item>]) -> Point2D {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 20))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 20));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 const DIRECTIONS: &[Point2D; 4] = &[
@@ -183,18 +186,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 1485);
-    assert_eq!(part2(input), 1027501);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "###############
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 1485);
+        assert_eq!(part2(input), 1027501);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "###############
 #...#...#.....#
 #.#.#.#.#.###.#
 #S#...#.#.#...#
@@ -209,7 +216,8 @@ fn examples() {
 #.#.#.#.#.#.###
 #...#...#...###
 ###############",
-    );
-    assert_eq!(calc(input.clone(), 2, 60), 1);
-    assert_eq!(calc(input, 20, 70), 41);
+        );
+        assert_eq!(calc(input.clone(), 2, 60), 1);
+        assert_eq!(calc(input, 20, 70), 41);
+    }
 }

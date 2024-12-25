@@ -10,7 +10,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 10))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 10));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -25,7 +28,7 @@ fn part2(input: Input) -> i64 {
         .sum()
 }
 
-fn trailheads(input: &Input) -> impl Iterator<Item = (i64, i64)> {
+fn trailheads(input: &Input) -> impl Iterator<Item = (i64, i64)> + use<'_> {
     let y_len = input.len() as i64;
     let x_len = input[0].len() as i64;
 
@@ -82,18 +85,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 841);
-    assert_eq!(part2(input), 1875);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "89010123
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 841);
+        assert_eq!(part2(input), 1875);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "89010123
 78121874
 87430965
 96549874
@@ -101,7 +108,8 @@ fn examples() {
 32019012
 01329801
 10456732",
-    );
-    assert_eq!(part1(input.clone()), 36);
-    assert_eq!(part2(input), 81);
+        );
+        assert_eq!(part1(input.clone()), 36);
+        assert_eq!(part2(input), 81);
+    }
 }

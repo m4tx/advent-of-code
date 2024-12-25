@@ -66,7 +66,10 @@ fn find_start(grid: &[Vec<Item>]) -> Point2D {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 16))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 16));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -224,18 +227,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 89460);
-    assert_eq!(part2(input), 504);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "###############
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 89460);
+        assert_eq!(part2(input), 504);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "###############
 #.......#....E#
 #.#.###.#.###.#
 #.....#.#...#.#
@@ -251,12 +258,12 @@ fn examples() {
 #S..#.....#...#
 ###############
 ",
-    );
-    assert_eq!(part1(input.clone()), 7036);
-    assert_eq!(part2(input), 45);
+        );
+        assert_eq!(part1(input.clone()), 7036);
+        assert_eq!(part2(input), 45);
 
-    let input = parse_input(
-        "#################
+        let input = parse_input(
+            "#################
 #...#...#...#..E#
 #.#.#.#.#.#.#.#.#
 #.#.#.#...#...#.#
@@ -273,7 +280,8 @@ fn examples() {
 #.#.#.#########.#
 #S#.............#
 #################",
-    );
-    assert_eq!(part1(input.clone()), 11048);
-    assert_eq!(part2(input), 64);
+        );
+        assert_eq!(part1(input.clone()), 11048);
+        assert_eq!(part2(input), 64);
+    }
 }

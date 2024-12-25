@@ -24,7 +24,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 19))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 19));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> usize {
@@ -75,18 +78,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 322);
-    assert_eq!(part2(input), 715514563508258);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "r, wr, b, g, bwu, rb, gb, br
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 322);
+        assert_eq!(part2(input), 715514563508258);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "r, wr, b, g, bwu, rb, gb, br
 
 brwrr
 bggr
@@ -96,7 +103,8 @@ ubwu
 bwurrg
 brgr
 bbrgwb",
-    );
-    assert_eq!(part1(input.clone()), 6);
-    assert_eq!(part2(input), 16);
+        );
+        assert_eq!(part1(input.clone()), 6);
+        assert_eq!(part2(input), 16);
+    }
 }

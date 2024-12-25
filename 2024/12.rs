@@ -16,7 +16,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 12))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 12));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -130,35 +133,39 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 1344578);
-    assert_eq!(part2(input), 814302);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "AAAA
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 1344578);
+        assert_eq!(part2(input), 814302);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "AAAA
 BBCD
 BBCC
 EEEC",
-    );
-    assert_eq!(part1(input.clone()), 140);
-    assert_eq!(part2(input), 80);
-    let input = parse_input(
-        "OOOOO
+        );
+        assert_eq!(part1(input.clone()), 140);
+        assert_eq!(part2(input), 80);
+        let input = parse_input(
+            "OOOOO
 OXOXO
 OOOOO
 OXOXO
 OOOOO",
-    );
-    assert_eq!(part1(input.clone()), 772);
-    assert_eq!(part2(input), 436);
-    let input = parse_input(
-        "RRRRIICCFF
+        );
+        assert_eq!(part1(input.clone()), 772);
+        assert_eq!(part2(input), 436);
+        let input = parse_input(
+            "RRRRIICCFF
 RRRRIICCCF
 VVRRRCCFFF
 VVRCCCJFFF
@@ -168,7 +175,8 @@ VVIIICJJEE
 MIIIIIJJEE
 MIIISIJEEE
 MMMISSJEEE",
-    );
-    assert_eq!(part1(input.clone()), 1930);
-    assert_eq!(part2(input), 1206);
+        );
+        assert_eq!(part1(input.clone()), 1930);
+        assert_eq!(part2(input), 1206);
+    }
 }

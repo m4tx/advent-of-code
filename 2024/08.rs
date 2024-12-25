@@ -7,7 +7,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 08))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 08));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -76,18 +79,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 396);
-    assert_eq!(part2(input), 1200);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "##....#....#
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 396);
+        assert_eq!(part2(input), 1200);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "##....#....#
 .#.#....0...
 ..#.#0....#.
 ..##...0....
@@ -99,15 +106,15 @@ fn examples() {
 ....#....A..
 .#........#.
 ...#......##",
-    );
-    assert_eq!(part1(input.clone()), 14);
-    assert_eq!(part2(input), 34);
-}
+        );
+        assert_eq!(part1(input.clone()), 14);
+        assert_eq!(part2(input), 34);
+    }
 
-#[test]
-fn examples_simple() {
-    let input = parse_input(
-        "..........
+    #[test]
+    fn examples_simple() {
+        let input = parse_input(
+            "..........
 ...#......
 ..........
 ....a.....
@@ -117,14 +124,14 @@ fn examples_simple() {
 ......#...
 ..........
 ..........",
-    );
-    assert_eq!(part1(input), 2);
-}
+        );
+        assert_eq!(part1(input), 2);
+    }
 
-#[test]
-fn examples_part2() {
-    let input = parse_input(
-        "T....#....
+    #[test]
+    fn examples_part2() {
+        let input = parse_input(
+            "T....#....
 ...T......
 .T....#...
 .........#
@@ -134,6 +141,7 @@ fn examples_part2() {
 ..........
 ....#.....
 ..........",
-    );
-    assert_eq!(part2(input), 9);
+        );
+        assert_eq!(part2(input), 9);
+    }
 }

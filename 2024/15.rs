@@ -146,7 +146,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 15))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 15));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(mut input: Input) -> i64 {
@@ -267,18 +270,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 1446158);
-    assert_eq!(part2(input), 1446175);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "########
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 1446158);
+        assert_eq!(part2(input), 1446175);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "########
 #..O.O.#
 ##@.O..#
 #...O..#
@@ -288,11 +295,11 @@ fn examples() {
 ########
 
 <^^>>>vv<v>>v<<",
-    );
-    assert_eq!(part1(input.clone()), 2028);
+        );
+        assert_eq!(part1(input.clone()), 2028);
 
-    let input = parse_input(
-        "#######
+        let input = parse_input(
+            "#######
 #...#.#
 #.....#
 #..OO@#
@@ -301,12 +308,12 @@ fn examples() {
 #######
 
 <vv<<^^<<^^",
-    );
-    assert_eq!(part1(input.clone()), 908);
-    assert_eq!(part2(input), 618);
+        );
+        assert_eq!(part1(input.clone()), 908);
+        assert_eq!(part2(input), 618);
 
-    let input = parse_input(
-        "##########
+        let input = parse_input(
+            "##########
 #..O..O.O#
 #......O.#
 #.OO..O.O#
@@ -327,7 +334,8 @@ vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
 <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
 ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
 v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^",
-    );
-    assert_eq!(part1(input.clone()), 10092);
-    assert_eq!(part2(input), 9021);
+        );
+        assert_eq!(part1(input.clone()), 10092);
+        assert_eq!(part2(input), 9021);
+    }
 }

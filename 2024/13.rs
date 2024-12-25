@@ -81,7 +81,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 13))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 13));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -118,18 +121,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 32026);
-    assert_eq!(part2(input), 89013607072065);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "Button A: X+94, Y+34
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 32026);
+        assert_eq!(part2(input), 89013607072065);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "Button A: X+94, Y+34
 Button B: X+22, Y+67
 Prize: X=8400, Y=5400
 
@@ -144,7 +151,8 @@ Prize: X=7870, Y=6450
 Button A: X+69, Y+23
 Button B: X+27, Y+71
 Prize: X=18641, Y=10279",
-    );
-    assert_eq!(part1(input.clone()), 480);
-    assert_eq!(part2(input), 875318608908);
+        );
+        assert_eq!(part1(input.clone()), 480);
+        assert_eq!(part2(input), 875318608908);
+    }
 }

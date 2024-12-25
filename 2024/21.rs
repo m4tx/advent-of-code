@@ -9,7 +9,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 21))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 21));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -236,23 +239,28 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 157230);
-    assert_eq!(part2(input), 195969155897936);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "029A
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 157230);
+        assert_eq!(part2(input), 195969155897936);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "029A
 980A
 179A
 456A
 379A",
-    );
-    assert_eq!(part1(input.clone()), 126384);
-    assert_eq!(part2(input), 154115708116294);
+        );
+        assert_eq!(part1(input.clone()), 126384);
+        assert_eq!(part2(input), 154115708116294);
+    }
 }
