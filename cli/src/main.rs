@@ -215,7 +215,14 @@ fn bench(year: u32, day: u32, args: &[String]) -> Result<()> {
     };
 
     let status = process::Command::new(env!("CARGO"))
-        .args(["run", "--release", "--bin", &bin_name])
+        .args([
+            "run",
+            "--features",
+            "default-inputs",
+            "--release",
+            "--bin",
+            &bin_name,
+        ])
         .args(cargo_args)
         .args(["--", "--bench"])
         .args(bin_args)
@@ -230,7 +237,14 @@ fn cargo(cmd: String, year: u32, day: u32, args: &[String]) -> Result<()> {
     let bin_name = format!("{year:04}{day:02}");
 
     let status = process::Command::new(env!("CARGO"))
-        .args([&cmd, "--release", "--bin", &bin_name])
+        .args([
+            &cmd,
+            "--features",
+            "default-inputs",
+            "--release",
+            "--bin",
+            &bin_name,
+        ])
         .args(args)
         .status()?;
 
