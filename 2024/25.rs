@@ -46,7 +46,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 25))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 25));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> usize {
@@ -74,17 +77,21 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input), 3451);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "#####
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input), 3451);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "#####
 .####
 .####
 .####
@@ -123,6 +130,7 @@ fn examples() {
 #.#..
 #.#.#
 #####",
-    );
-    assert_eq!(part1(input), 3);
+        );
+        assert_eq!(part1(input), 3);
+    }
 }

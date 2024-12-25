@@ -85,7 +85,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 24))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 24));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -287,17 +290,21 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 55661564905190);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "x00: 1
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 55661564905190);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "x00: 1
 x01: 1
 x02: 1
 y00: 0
@@ -307,6 +314,7 @@ y02: 0
 x00 AND y00 -> z00
 x01 XOR y01 -> z01
 x02 OR y02 -> z02",
-    );
-    assert_eq!(part1(input.clone()), 4);
+        );
+        assert_eq!(part1(input.clone()), 4);
+    }
 }

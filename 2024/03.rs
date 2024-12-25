@@ -24,7 +24,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 03))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 03));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -43,20 +46,26 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 183669043);
-    assert_eq!(part2(input), 59097164);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input =
-        parse_input("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))");
-    assert_eq!(part1(input.clone()), 161);
-    let input =
-        parse_input("xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))");
-    assert_eq!(part2(input), 48);
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 183669043);
+        assert_eq!(part2(input), 59097164);
+    }
+
+    #[test]
+    fn examples() {
+        let input =
+            parse_input("xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))");
+        assert_eq!(part1(input.clone()), 161);
+        let input = parse_input(
+            "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))",
+        );
+        assert_eq!(part2(input), 48);
+    }
 }

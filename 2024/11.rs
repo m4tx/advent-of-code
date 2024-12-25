@@ -10,7 +10,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 11))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 11));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -58,18 +61,24 @@ fn main() {
     solution.cli()
 }
 
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 190865);
-    assert_eq!(part2(input), 225404711855335);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input("0 1 10 99 999");
-    assert_eq!(blink(&input, 1), 7);
-    let input = parse_input("125 17");
-    assert_eq!(blink(&input, 6), 22);
-    assert_eq!(part1(input), 55312);
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 190865);
+        assert_eq!(part2(input), 225404711855335);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input("0 1 10 99 999");
+        assert_eq!(blink(&input, 1), 7);
+        let input = parse_input("125 17");
+        assert_eq!(blink(&input, 6), 22);
+        assert_eq!(part1(input), 55312);
+    }
 }

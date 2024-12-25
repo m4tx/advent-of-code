@@ -23,7 +23,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 23))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 23));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -98,18 +101,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 1306);
-    assert_eq!(part2(input), "bd,dk,ir,ko,lk,nn,ob,pt,te,tl,uh,wj,yl");
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "kh-tc
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 1306);
+        assert_eq!(part2(input), "bd,dk,ir,ko,lk,nn,ob,pt,te,tl,uh,wj,yl");
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "kh-tc
 qp-kh
 de-cg
 ka-co
@@ -141,7 +148,8 @@ co-tc
 wh-qp
 tb-vc
 td-yn",
-    );
-    assert_eq!(part1(input.clone()), 7);
-    assert_eq!(part2(input), "co,de,ka,ta");
+        );
+        assert_eq!(part1(input.clone()), 7);
+        assert_eq!(part2(input), "co,de,ka,ta");
+    }
 }

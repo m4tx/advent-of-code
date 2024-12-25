@@ -14,7 +14,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 02))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 02));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -68,24 +71,29 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 639);
-    assert_eq!(part2(input), 674);
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let input = parse_input(
-        "7 6 4 2 1
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 639);
+        assert_eq!(part2(input), 674);
+    }
+
+    #[test]
+    fn examples() {
+        let input = parse_input(
+            "7 6 4 2 1
 1 2 7 8 9
 9 7 6 2 1
 1 3 2 4 5
 8 6 4 4 1
 1 3 6 7 9",
-    );
-    assert_eq!(part1(input.clone()), 2);
-    assert_eq!(part2(input), 4);
+        );
+        assert_eq!(part1(input.clone()), 2);
+        assert_eq!(part2(input), 4);
+    }
 }

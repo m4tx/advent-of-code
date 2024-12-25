@@ -59,7 +59,10 @@ fn parse_input(input: &str) -> Input {
 }
 
 fn default_input() -> Input {
-    parse_input(include_input!(2024 / 18))
+    #[cfg(feature = "default-inputs")]
+    return parse_input(include_input!(2024 / 18));
+    #[cfg(not(feature = "default-inputs"))]
+    panic!("default-inputs feature not enabled");
 }
 
 fn part1(input: Input) -> i64 {
@@ -122,18 +125,22 @@ fn main() {
     solution.cli()
 }
 
-#[ignore]
-#[test]
-fn default() {
-    let input = default_input();
-    assert_eq!(part1(input.clone()), 310);
-    assert_eq!(part2(input), "16,46");
-}
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-fn examples() {
-    let mut input = parse_input(
-        "5,4
+    #[ignore]
+    #[test]
+    fn default() {
+        let input = default_input();
+        assert_eq!(part1(input.clone()), 310);
+        assert_eq!(part2(input), "16,46");
+    }
+
+    #[test]
+    fn examples() {
+        let mut input = parse_input(
+            "5,4
 4,2
 4,5
 3,0
@@ -158,9 +165,10 @@ fn examples() {
 0,5
 1,6
 2,0",
-    );
-    input.size = 7;
-    input.cutoff = 12;
-    assert_eq!(part1(input.clone()), 22);
-    assert_eq!(part2(input), "6,1");
+        );
+        input.size = 7;
+        input.cutoff = 12;
+        assert_eq!(part1(input.clone()), 22);
+        assert_eq!(part2(input), "6,1");
+    }
 }
