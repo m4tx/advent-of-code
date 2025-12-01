@@ -41,7 +41,7 @@ fn num_after(num: i64, steps: i64, map: &mut HashMap<(i64, i64), i64>) -> i64 {
         num_after(1, steps - 1, map)
     } else {
         let len = num.ilog10() + 1;
-        if len % 2 == 0 {
+        if len.is_multiple_of(2) {
             let mult = 10i64.pow(len / 2);
 
             let left = num / mult;

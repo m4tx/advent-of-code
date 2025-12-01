@@ -2,23 +2,23 @@
 members = ["cli"]
 
 [workspace.dependencies]
-advent = { git = "https://github.com/rossmacarthur/advent", rev = "33602ef987536049b79569d799603e0122fb4e0a" }
-anyhow = "1.0.94"
-argh = "0.1.12"
-curl = "0.4.47"
-itertools = "0.13.0"
-open = "5.3.1"
-rayon = "1.10.0"
-regex = "1.11.1"
-serde = { version = "1.0.215", features = ["derive"] }
-time = "0.3.37"
-toml = "0.8.8"
-yansi = "1.0.1"
+advent = { git = "https://github.com/rossmacarthur/advent", rev = "1ce630394ce6b6bef242fbec55172f43369d47f2" }
+anyhow = "1"
+argh = "0.1"
+curl = "0.4"
+itertools = "0.14"
+open = "5.3"
+rayon = "1.10"
+regex = "1.11"
+serde = { version = "1", features = ["derive"] }
+time = "0.3"
+toml = "0.9"
+yansi = "1"
 
 [package]
 name = "advent-bins"
 version = "0.0.0"
-edition = "2021"
+edition = "2024"
 publish = false
 
 [dependencies]
@@ -130,3 +130,7 @@ path = "2024/24.rs"
 [[bin]]
 name = "202425"
 path = "2024/25.rs"
+
+[[bin]]
+name = "202501"
+path = "2025/01.rs"

@@ -140,10 +140,10 @@ fn calc(input: Input) -> (i64, usize) {
         Direction::Left,
         Direction::Right,
     ] {
-        if let Some(&d) = distances.get(&(end_pos, *direction)) {
-            if d == best_distance {
-                backtrack(&input, &distances, &mut all_points, end_pos, *direction, d);
-            }
+        if let Some(&d) = distances.get(&(end_pos, *direction))
+            && d == best_distance
+        {
+            backtrack(&input, &distances, &mut all_points, end_pos, *direction, d);
         }
     }
 
@@ -168,17 +168,17 @@ fn backtrack(
             let new_pos = Point2D::new(pos.x - dx, pos.y - dy);
             let new_distance = distance - 1 - if new_direction == dir { 0 } else { 1000 };
 
-            if let Some(&d) = distances.get(&(new_pos, new_direction)) {
-                if d == new_distance {
-                    backtrack(
-                        input,
-                        distances,
-                        all_points,
-                        new_pos,
-                        new_direction,
-                        new_distance,
-                    );
-                }
+            if let Some(&d) = distances.get(&(new_pos, new_direction))
+                && d == new_distance
+            {
+                backtrack(
+                    input,
+                    distances,
+                    all_points,
+                    new_pos,
+                    new_direction,
+                    new_distance,
+                );
             }
         }
     }

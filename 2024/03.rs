@@ -12,11 +12,11 @@ fn parse_input(input: &str) -> Input {
             enabled = true;
         } else if input[i..].starts_with("don't()") {
             enabled = false;
-        } else if input[i..].starts_with("mul(") {
-            if let Some(captures) = re.captures(&input[i..]) {
-                let (_, [a, b]) = captures.extract();
-                results.push((enabled, a.parse().unwrap(), b.parse().unwrap()));
-            }
+        } else if input[i..].starts_with("mul(")
+            && let Some(captures) = re.captures(&input[i..])
+        {
+            let (_, [a, b]) = captures.extract();
+            results.push((enabled, a.parse().unwrap(), b.parse().unwrap()));
         }
     }
 

@@ -186,10 +186,9 @@ fn check_values(
         if output.len() > index
             && output[0..index + 1] == input.opcodes[0..index + 1]
             && output.len() <= input.opcodes.len()
+            && let Some(val) = check_values(input.clone(), output, values, index + 1, reg_a)
         {
-            if let Some(val) = check_values(input.clone(), output, values, index + 1, reg_a) {
-                return Some(val);
-            }
+            return Some(val);
         }
     }
 

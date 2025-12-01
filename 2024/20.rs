@@ -153,10 +153,9 @@ fn calc(input: Input, max_distance: i64, min_save: i64) -> i64 {
         if let (Some(&before_dist), Some(&after_dist)) = (
             distances.get(&before_position),
             distances.get(&after_position),
-        ) {
-            if after_dist - before_dist >= min_save + dist {
-                count += 1;
-            }
+        ) && after_dist - before_dist >= min_save + dist
+        {
+            count += 1;
         }
     }
 
