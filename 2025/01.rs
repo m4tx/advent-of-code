@@ -25,7 +25,7 @@ fn part1(input: Input) -> i64 {
 
     for step in input {
         rot += step;
-        rot %= 100;
+        rot = rot.rem_euclid(100);
         if rot == 0 {
             count += 1;
         }
@@ -51,8 +51,7 @@ fn part2(input: Input) -> i64 {
         } else if rot == 0 {
             count += 1;
         }
-        rot += 1000;
-        rot %= 100;
+        rot = rot.rem_euclid(100);
     }
 
     count
