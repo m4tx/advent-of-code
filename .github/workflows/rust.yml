@@ -66,7 +66,7 @@ jobs:
           components: clippy
 
       - name: Run clippy
-        run: cargo clippy -- -Dclippy::all
+        run: cargo clippy --all-features
 
   rustfmt:
     runs-on: ubuntu-latest

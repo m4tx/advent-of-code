@@ -32,6 +32,7 @@ default = []
 default-inputs = []
 
 [lints.clippy]
+all = { level = "warn", priority = -1 }
 needless_range_loop = "allow"
 
 [[bin]]
