@@ -31,6 +31,9 @@ regex = { workspace = true }
 default = []
 default-inputs = []
 
+[lints.clippy]
+needless_range_loop = "allow"
+
 [[bin]]
 name = "202401"
 path = "2024/01.rs"

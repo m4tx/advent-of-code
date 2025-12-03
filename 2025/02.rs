@@ -59,13 +59,13 @@ fn check_repeated_impl(input: Input, policy: Policy) -> i64 {
 }
 
 fn is_repeated(s: &str, split_at: usize) -> bool {
-    if s.len() % split_at != 0 {
+    if !s.len().is_multiple_of(split_at) {
         return false;
     }
 
     let parts = s.len() / split_at;
     for part in 1..parts {
-        if &s[0..split_at] != &s[part * split_at..(part + 1) * split_at] {
+        if s[0..split_at] != s[part * split_at..(part + 1) * split_at] {
             return false;
         }
     }

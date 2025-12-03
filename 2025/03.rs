@@ -35,7 +35,7 @@ fn get_best_value(s: &[u8], digit_num: usize) -> i64 {
 
     let mut last_index = 0;
     for digit in 0..digit_num {
-        let index = get_max(&s, last_index, s.len() - (digit_num - digit));
+        let index = get_max(s, last_index, s.len() - (digit_num - digit));
         digits.push(s[index] as char);
         last_index = index + 1;
     }
