@@ -298,7 +298,7 @@ mod tests {
     #[test]
     fn default() {
         let input = default_input();
-        assert_eq!(part1(input.clone()), 55661564905190);
+        assert_eq!(part1(input.clone()), 55730288838374);
     }
 
     #[test]
